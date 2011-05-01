@@ -1,0 +1,116 @@
+%
+% Diplomarbeit mit LaTeX
+% ===========================================================================
+% This is part of the book "Diplomarbeit mit LaTeX".
+% Copyright (c) 2002, 2003, 2005, 2007, 2008 Tobias Erbsland
+% Copyright (c) 2005, 2006 Andreas Nitsch
+% See the file main.tex for copying conditions.
+%
+
+%
+% A. DOKUMENTKLASSE
+% ---------------------------------------------------------------------------
+%
+
+%
+%  1. Definieren der Dokumentklasse.
+%     Wir verwenden die KOMA-Script Klasse 'scrbook' für ein Buch.
+%
+\documentclass[%
+	pdftex,%              PDFTex verwenden da wir ausschliesslich ein PDF erzeugen.
+	oneside,%             Einseitiger Druck.
+	12pt,%                Grosse Schrift, besser geeignet für A4.
+	parskip=half,%        Halbe Zeile Abstand zwischen Absätzen.
+	headsepline,%         Linie nach Kopfzeile.
+	footsepline,%         Linie vor Fusszeile.
+	bibtotocnumbered,%    Literaturverzeichnis im Inhaltsverzeichnis nummeriert einfügen.
+]{scrartcl}
+
+\usepackage{abstract}
+
+% Hurenkinder und Schusterjungen verhindern
+% http://mrunix.de/forums/showthread.php?t=66436
+%\clubpenalty10000
+%\widowpenalty10000
+%\displaywidowpenalty=10000
+
+%
+%  2. Festlegen der Zeichencodierung des Dokuments und des Zeichensatzes.
+%     Wir verwenden 'Latin1' (ISO-8859-1) für das Dokument,
+%     und die 'T1' codierung für die Schrift.
+%
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+%\usepackage{setspace}
+%\usepackage[onehalfspacing]{setspace}
+
+%
+%  4. Paket für die Lokalisierung ins Deutsche laden.
+%     Wir verwenden neue deutsche Rechtschreibung mit 'ngerman'.
+%
+\usepackage[ngerman]{babel}
+
+
+%
+%  5. Paket für Anführungszeichen laden.
+%     Wir setzen den Stil auf 'swiss', und verwenden so die Schweizer Anführungszeichen.
+%
+%\usepackage[style=swiss]{csquotes}
+\usepackage[babel,german=quotes]{csquotes}
+
+%
+%  7. Paket um Grafiken im Dokument einbetten zu können.
+%     Im PDF sind GIF, PNG, und PDF Grafiken möglich.
+%
+\usepackage{graphicx}
+
+%
+%  8. Pakete für mathematischen Textsatz.
+%
+\usepackage{amsmath}
+\usepackage{amssymb}
+%%\usepackage{dsfont}
+%%\usepackage{mathtools}
+
+%
+% 13 Schriftart
+%
+%\usepackage{goudysans}
+\usepackage{lmodern}
+%\usepackage{libertine}
+
+%
+%  5. Farbeinstellungen für die Links im PDF Dokument.
+%
+%\hypersetup{%
+%	colorlinks=false,%        Aktivieren von farbigen Links im Dokument (keine Rahmen)
+%	linkcolor=LinkColor,%    Farbe festlegen.
+%	citecolor=LinkColor,%    Farbe festlegen.
+%	filecolor=LinkColor,%    Farbe festlegen.
+%	menucolor=LinkColor,%    Farbe festlegen.
+%	urlcolor=LinkColor,%     Farbe von URL's im Dokument.
+%	bookmarksnumbered=true%  Überschriftsnummerierung im PDF Inhalt anzeigen.
+%}
+
+%
+%  6. Einstellungen für das 'listings' Paket.
+%
+%\usepackage[savemem]{listings}
+%\lstloadlanguages{TeX} % TeX sprache laden, notwendig wegen option 'savemem'
+%\lstset{%
+%	language=C,				 % Sprache des Quellcodes
+%	numbers=left,            % Zelennummern links
+%	stepnumber=1,            % Jede Zeile nummerieren.
+%	numbersep=5pt,           % 5pt Abstand zum Quellcode
+%	numberstyle=\tiny,       % Zeichengrösse 'tiny' für die Nummern.
+%	breaklines=true,         % Zeilen umbrechen wenn notwendig.
+%	breakautoindent=true,    % Nach dem Zeilenumbruch Zeile einrücken.
+%	postbreak=\space,        % Bei Leerzeichen umbrechen.
+%	tabsize=2,               % Tabulatorgrösse 2
+%	basicstyle=\ttfamily\footnotesize, % Nichtproportionale Schrift, klein für den Quellcode
+%	showspaces=false,        % Leerzeichen nicht anzeigen.
+%	showstringspaces=false,  % Leerzeichen auch in Strings ('') nicht anzeigen.
+%	extendedchars=true,      % Alle Zeichen vom Latin1 Zeichensatz anzeigen.
+%	captionpos=b,            % sets the caption-position to bottom
+%	backgroundcolor=\color{ListingBackground}} % Hintergrundfarbe des Quellcodes setzen.
+
