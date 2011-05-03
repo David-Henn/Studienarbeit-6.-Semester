@@ -5,41 +5,13 @@
   \textsc{David Kriesel}: 
   \textbf{Ein kleiner Überblick über Neuronale Netze}.
   \emph{www.dkriesel.com}, 2007, Abgerufen am 15.04.2011
-
-% Grundlagen
-
-\bibitem[enc11]{bib:neuron}
-  \textsc{encefalus.com}: 
-  \textbf{Modell eines neuronalen Netzes}.
-  \emph{www.encefalus.com}, 2010, Abgerufen am 17.04.2011
-
-  \bibitem[doe11]{bib:doersam}
-	\textsc{Dr. Thomas Dörsam}:
-	\textbf{Digitale Sprachverarbeitung}.
-	Skript, 2011
   
- \bibitem[hef11]{bib:stufe}
-  \textsc{Klaus Heft}: 
-  \textbf{MATHEMATISCHER VORKURS zum Studium der Physik}.
-  \emph{www.thphys.uni-heidelberg.de/\textasciitilde{}hefft/vk1/}, 2011, Abgerufen am 17.04.2011
+  \bibitem[DHV11]{bib:agil}
+    \textsc{Tobias Dreher, Mischa Vogt, David Henn:}
+    \textbf{Agile Softwareentwicklung - Einsatz und Werkzeuge im Open Source Umfeld.}
+    Seminararbeit 2011
+    
 
-% Dreher
-\bibitem[ct211]{bib:ct211}
-  \textsc{Hans-Arthur Marsiske}: 
-  \textbf{Wie Maschinen denken lernen}.
-  c't Magazin, Ausgabe 2/2011, S. 70 ff., Heise Zeitschriften Verlag
-
-\bibitem[ct711]{bib:ct711}
-  \textsc{Hans-Arthur Marsiske}: 
-  \textbf{Der WM-Titel ist näher gerückt}.
-  c't Magazin, Ausgabe 7/2011, S. 72 ff., Heise Zeitschriften Verlag
-
-\bibitem[Ame11]{bib:ameisen}
-  \textsc{Karl-Werner Hansmann, Nils Boysen}: 
-  \textbf{Ameisenalgorithmus}.
-  \emph{www.ameisenalgorithmus.de}, 2004, Abgerufen am 16.04.2011
-
-% Henn
 
 \end{thebibliography}
 
