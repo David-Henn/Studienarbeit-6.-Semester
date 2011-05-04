@@ -95,22 +95,27 @@
 %
 %  6. Einstellungen für das 'listings' Paket.
 %
-%\usepackage[savemem]{listings}
-%\lstloadlanguages{TeX} % TeX sprache laden, notwendig wegen option 'savemem'
-%\lstset{%
-%	language=C,				 % Sprache des Quellcodes
-%	numbers=left,            % Zelennummern links
-%	stepnumber=1,            % Jede Zeile nummerieren.
-%	numbersep=5pt,           % 5pt Abstand zum Quellcode
-%	numberstyle=\tiny,       % Zeichengrösse 'tiny' für die Nummern.
-%	breaklines=true,         % Zeilen umbrechen wenn notwendig.
-%	breakautoindent=true,    % Nach dem Zeilenumbruch Zeile einrücken.
-%	postbreak=\space,        % Bei Leerzeichen umbrechen.
-%	tabsize=2,               % Tabulatorgrösse 2
-%	basicstyle=\ttfamily\footnotesize, % Nichtproportionale Schrift, klein für den Quellcode
-%	showspaces=false,        % Leerzeichen nicht anzeigen.
-%	showstringspaces=false,  % Leerzeichen auch in Strings ('') nicht anzeigen.
-%	extendedchars=true,      % Alle Zeichen vom Latin1 Zeichensatz anzeigen.
-%	captionpos=b,            % sets the caption-position to bottom
-%	backgroundcolor=\color{ListingBackground}} % Hintergrundfarbe des Quellcodes setzen.
+\usepackage{color}
+\definecolor{ListingBackground}{gray}{.9}
+\usepackage[savemem]{listings}
+\lstloadlanguages{TeX} % TeX sprache laden, notwendig wegen option 'savemem'
+\lstset{%
+	language=Java,				 % Sprache des Quellcodes
+	numbers=left,            % Zelennummern links
+	stepnumber=1,            % Jede Zeile nummerieren.
+	numbersep=5pt,           % 5pt Abstand zum Quellcode
+	numberstyle=\tiny,       % Zeichengrösse 'tiny' für die Nummern.
+	breaklines=true,         % Zeilen umbrechen wenn notwendig.
+	breakautoindent=true,    % Nach dem Zeilenumbruch Zeile einrücken.
+	postbreak=\space,        % Bei Leerzeichen umbrechen.
+	tabsize=2,               % Tabulatorgrösse 2
+	basicstyle=\ttfamily\footnotesize, % Nichtproportionale Schrift, klein für den Quellcode
+	showspaces=false,        % Leerzeichen nicht anzeigen.
+	showstringspaces=false,  % Leerzeichen auch in Strings ('') nicht anzeigen.
+	extendedchars=true,      % Alle Zeichen vom Latin1 Zeichensatz anzeigen.
+	captionpos=b,            % sets the caption-position to bottom
+	keywordstyle=\color{blue}, % Farbe für die Keywords wie public, void, object u.s.w.
+	commentstyle=\color{green}, % Farbe der Kommentare
+	stringstyle=\color{red}, % Farbe der Zeichenketten
+	backgroundcolor=\color{ListingBackground}} % Hintergrundfarbe des Quellcodes setzen.
 

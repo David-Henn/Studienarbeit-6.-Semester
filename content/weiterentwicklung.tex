@@ -63,3 +63,132 @@ Die Anforderung der zu geringen Transparenz wurde etwas anders gelöst, als anfa
 
 
 \subsection{Implementierung}
+
+Die Implementierung der neuen Funktionalitäten lässt sich in mehrere Aspekte unterteilen.
+\begin{enumerate}
+\item die gültigen Linien
+\item Ermittlung der nächsten gültigen Linie zur Mausposition
+\item Zeichnen des aktuellen Polygons
+\item Speicherung und Anzeige akzeptierter Polygone
+\item Ermittlung der Punkte innerhalb eines Polygons und Darstellung in einem Baum
+\end{enumerate}
+
+Da diese Aufgabe im Team mit Herr Vogt gemeinsam gelöst werden sollte, wurden die Aspekte aufgeteilt. Herr Vogt bearbeitete Aspekt Nr. 1, ich die Aspekte 4 - 6. Im folgenden sollen nun die wichtigsten Details meiner Implementierung erläutert werden.
+
+\begin{description}
+\item[Ermittlung der nächsten gültigen Linie zur Mausposition:] Um die nächste Linie zu ermitteln wurde ein Interface definiert, das alle Klassen, die eine Linie repräsentieren implementieren müssen. Anhand dieses Interfaces kann gesammelt über alle Linien des Diagramms iteriert werden und Funktionswerte verglichen werden. Listing \ref{function} zeigt die Definition des Interfaces.
+\begin{lstlisting}[captionpos=b, caption=Interface für die Linien, label=function]
+public interface Function {
+    public Point calcY(int x, int y);
+}
+\end{lstlisting}
+
+Wie in Listing \ref{function} zu sehen, wird immer ein Punkt zurückgegeben. Dieser Punkt definiert den Punkt auf der Linie, der am ehesten der aktuellen Mausposition entsprechen würde. Diese Punkte können nun verglichen werden.
+\begin{lstlisting}[captionpos=b, caption=Methode zum ermitteln des nächsten Punktes, label=setPoint]
+Point bestPoint = new Point();
+        int bestDist = 1000000;
+        for (Function function : functions) {
+            Point curPoint = function.calcY(x, y);
+
+            int dist = Math.abs(x - curPoint.x) + Math.abs(y -curPoint.y);
+            if(dist < bestDist){
+                bestDist = dist;
+                bestPoint = curPoint;
+            }
+        }
+\end{lstlisting}
+
+Listing \ref{setPoint} zeigt die Ermittlung der nächsten Linie. Der Abstand des Punktes auf der Linie zur aktuellen Mausposition wird durch die Addition der absoluten Abstände der X- und Y-Werte berechnet. Ist dieser Abstand kleiner als der bisherige kleinste Abstand, so wird dieser übernommen und der Punkt gespeichert. 
+
+Damit diese Methode bei jeder Mausbewegung aufgerufen wird, ist es noch notwendig einen eigenen MouseMotionListener zu implementieren. Dieser reagiert auf Ereignisse, die durch die Maus ausgelöst werden. Wie zum Beispiel, wenn die Maus bewegt wird. Dieser MouseMotionListener ist in Listing \ref{mmlistener} abgebildet. Dort wird bei jeder Mausbewegung die Methode \emph{setPoint} aufgerufen, die die Berechnung aus Listing \ref{setPoint} beinhaltet. Im Anschluss wird das gesamte Bild neu gezeichnet.
+\begin{lstlisting}[captionpos=b, caption=MouseMotionListener, label=mmlistener]
+class drawAreaMouseMotionListener extends MouseMotionAdapter{
+        @Override
+        public void mouseMoved(MouseEvent event){
+            setPoint(event.getX(), event.getY());
+            repaint();
+        }
+}
+\end{lstlisting}
+
+\item[Zeichnen des aktuellen Polygons:] Das aktuelle Polygon muss immer dann neu gezeichnet werden, wenn der Benutzer durch einen Klick einen neuen Eckpunkt hinzufügt. Um diesen Klick zu registrieren, muss wieder ein MouseListener implementiert werden. Dieser reagiert allerdings nicht auf Mausbewegungen, wie der vorherige MouseListener, sondern auf Klicks. Somit wird in der Methode \emph{mouseClicked} der im vorherigen Schritt ermittelte Punkt zu dem aktuellen Polygon hinzugefügt (Listing \ref{addPoint}).
+\begin{lstlisting}[captionpos=b, caption=Neuen Punkt zum Polygon hinzufügen, label=addPoint]
+polygon.addPoint(currentPoint.x, currentPoint.y);
+repaint();
+\end{lstlisting}
+
+Mit dem Aufruf der Methode \emph{repaint} wird unter anderem die Methode \emph{paint} ausgeführt. Dort wird das Polygon neu gezeichnet.
+\begin{lstlisting}[captionpos=b, caption=Zeichnen des Polygons, label=drawPol]
+g.setColor(ovalColor[2-x_index][2-y_index]);
+g.drawPolygon(polygon);
+
+Composite c = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,0.1f);
+g2d.setComposite(c);
+
+g.fillPolygon(polygon);
+\end{lstlisting}
+
+In Listing \ref{drawPol} wird die Zeichenroutine aufgeführt. Es ist zu sehen, dass zuerst mit der Methode \emph{drawPolygon} nur die Umrisse des Polygons gezeichnet werden. Erst im Anschluss wird der Alphakanal verändert, um die Transparenz der Farbe zu beinflussen, damit die Füllung des Polygons die darunterliegenden Knoten nicht überdeckt.
+
+\item[Speicherung und Anzeige akzeptierter Polygone:] Die Definition eines neuen Polygons wird mit einem Doppelklick abgeschlossen. Dieser Doppelklick wird ebenfalls mit dem vorherigen MouseListener registriert. Daraufhin wird dem Benutzer ein Dialog präsentiert, in dem er wählen kann, ob das Polygon gespeichert, oder verworfen werden soll. Soll das Polygon behalten werden, so muss der Benutzer einen Namen vergeben. Listing \ref{speichern} zeigt, wie die Speicherroutine implementiert wurde.
+\begin{lstlisting}[captionpos=b, caption=Routine zum Speichern eines Polygons, label=speichern]
+String description = JOptionPane.showInputDialog(parent, "Give in a description..", "Area Description", 3);
+if(description == null){
+  polygon = new Polygon();
+  repaint();
+  return;
+}  
+NamedPolygon pol = new NamedPolygon(polygon.xpoints, polygon.ypoints, polygon.npoints);
+pol.setName(description);
+searchInnerPoints(pol);
+polygons.add(pol);
+polygon = new Polygon();
+repaint();
+\end{lstlisting}
+
+Die Zeilen 1 - 6 Erzeugen einen Eingabedialog für den Namen. Gibt der Benutzer keinen Namen ein, wird die Routine abgebrochen. Im Anschluss wird ein neues Polygon vom selbst erzeugten Typ NamedPolygon (Listing \ref{namedP}) instanziiert, dem der vom Benutzer eingegebene Name zugewiesen wird. Daraufhin wird das neue Polygon in einer Liste gespeichert und das alte Polygon wieder zurückgesetzt. 
+\begin{lstlisting}[captionpos=b, caption=Klassendefinition des NamedPolygon, label=namedP]
+public class NamedPolygon extends Polygon{
+    String name;
+
+    public NamedPolygon(int xpoints[], int ypoints[], int npoints){
+        super(xpoints, ypoints, npoints);
+    }
+    public NamedPolygon(){
+        super();
+    }
+    public void setName(String name){
+        this.name = name;
+    }
+    public String getName(){
+        return this.name;
+    }
+
+}
+\end{lstlisting}
+
+\item[Ermittlung der Punkte innerhalb eines Polygons und Darstellung in einem Baum:] Zeile 9 des Listings \ref{speichern} zeigt schon den Aufruf der Methode \emph{searchInnerPoints}. Listing \ref{siPoints} zeigt diese Methode.
+\begin{lstlisting}[captionpos=b, caption=Methode searchInnerPoints, label=siPoints]
+public void searchInnerPoints(NamedPolygon pol){
+        DefaultMutableTreeNode root = new DefaultMutableTreeNode(pol.getName());
+        List<String> innerPoints = new ArrayList<String>();
+        for(int i=0; i<points.size();i++){
+            if(pol.contains(points.elementAt(i))){
+                String name = data.getListModelNodes().getElementAt(i).toString();
+                innerPoints.add(name);
+                DefaultMutableTreeNode child = new DefaultMutableTreeNode(name,false);
+                root.add(child);
+            }
+        }
+        
+        data.getPolyModel().insertNodeInto(root, data.getRoot(), 0);
+}
+\end{lstlisting}
+
+In der Methode \emph{searchInnerPoints} geschieht allerdings noch mehr, als nur das ermitteln der Punkte, die innerhalb eines Polygons liegen. Es wird außerdem gleich ein kleiner Teilbaum generiert, in dem das Polygon  selbst die Wurzel und die Knoten Blätter sind.
+
+\end{description}
+
+\begin{lstlisting}[captionpos=b, caption=Mehr Text, label=code]
+
+\end{lstlisting}
