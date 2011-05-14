@@ -1,6 +1,6 @@
 \section{Weiterentwicklung}
 
-In der zweiten Phase des Projekts soll die Funktionalität des KSM erweitert werden. Besonderes Augenmerk liegt hierbei auf der Verbesserung der Anzeige, welche Knoten im aktiven/passiven, oder kritischen Bereich liegen. Diese Anzeige wird intern auch Sum-Chart genannt. Hier wurde bereits in einer der letzten Studienarbeiten von Frau Klein angefangen, es dem Benutzer zu ermöglichen, Bereiche zu definieren und zu markieren \cite{bib:klein}. Bereiche waren in diesem Fall Ellipsen, die vom Benutzer aufgezogen wurden. Je größer diese wurden, desto transparenter wurde die Füllfarbe. Die Abbildung \ref{ellipse} zeigt den letzten Stand dieser Implementierung.
+In der zweiten Phase des Projekts soll die Funktionalität des KSM erweitert werden. Besonderes Augenmerk liegt hierbei auf der Verbesserung der Anzeige, welche Knoten im aktiven/passiven, oder kritischen Bereich liegen. Diese Anzeige wird intern auch Sum-Chart genannt. Hier wurde bereits in einer der letzten Studienarbeiten von Frau Klein angefangen es dem Benutzer zu ermöglichen Bereiche zu definieren und zu markieren \cite{bib:klein}. Bereiche waren in diesem Fall Ellipsen, die vom Benutzer aufgezogen wurden. Je größer diese wurden, desto transparenter wurde die Füllfarbe. Die Abbildung \ref{ellipse} zeigt den letzten Stand dieser Implementierung.
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.6\textwidth]{pictures/ellipse.png}
@@ -15,8 +15,8 @@ Nach Evaluation dieser Implementierung kam Herr Professor Schubert zu dem Schlus
 Die neuen Anforderungen an eine Bereichsmarkierung lauteten nach diesen Erkenntnissen wie folgt:
 \begin{itemize}
   \item Der Benutzer muss in der Lage sein, einen Bereich mittels Eckpunkten definieren zu können
-  \item Es dürfen beliebig viele Eckpunkte sein
-  \item Die Eckpunkte dürfen nur auf bereits vorhandenen Linien laufen:
+  \item Es müssen beliebig viele Eckpunkte sein eingegeben werden können
+  \item Die Eckpunkte dürfen nur auf bereits vorhandenen Linien gesetzt werden:
   \begin{itemize}
     \item X-Achse
     \item Y-Achse
@@ -31,7 +31,7 @@ Dazu wurde noch von den Projektmitgliedern entschieden, dass erstellte Bereiche 
 
 \subsection{Ergebnis}
 
-Die gestellten Anforderungen wurden vollständig umgesetzt. Der Benutzer kann nun durch setzen mehrerer Eckpunkte, die sich auf den vorgegebenen Linien befinden ein Polygon definieren.
+Die gestellten Anforderungen wurden vollständig umgesetzt. Der Benutzer kann nun durch Setzen mehrerer Eckpunkte, die sich auf den vorgegebenen Linien befinden ein Polygon definieren.
 
 Damit der Benutzer immer weiß, wo der nächste Eckpunkt gesetzt werden würde, wurde ein roter Punkt implementiert, der sich nur auf den erlaubten Linien bewegt und so den nächsten Eckpunkt markiert (Abbildung \ref{roterPunkt}).
 \begin{figure}
@@ -41,11 +41,11 @@ Damit der Benutzer immer weiß, wo der nächste Eckpunkt gesetzt werden würde, 
 	\label{roterPunkt}
 \end{figure}
 
-Mittels Klick wird der Punkt gespeichert und ein vorläufiges Polygon gezeichnet. Will der Benutzer die Eingabe beenden, kann er das Polygon mit einem Doppelklick abschließen. Anschließend wird einen Auswahldialog präsentiert, ob das Polygon übernommen, oder verworfen werden soll.
+Mittels Klick wird der Punkt gespeichert und ein vorläufiges Polygon gezeichnet. Will der Benutzer die Eingabe beenden, kann er das Polygon mit einem Doppelklick abschließen. Anschließend wird einen Auswahldialog präsentiert, der dem Benutzer die Auswahl ermöglicht, das Polygon zu übernehmen, oder zu verwerfen.
 Abbildung \ref{menü} zeigt ein abgeschlossenes Polygon und das Auswahlmenü.
 \begin{figure}
 	\centering
-	\includegraphics[width=1\textwidth]{pictures/menu.png}
+	\includegraphics[width=0.8\textwidth]{pictures/menu.png}
 	\caption{abgeschlossenes Polygon mit Auswahldialog}
 	\label{menü}
 \end{figure}
@@ -58,7 +58,7 @@ Nachdem ein Polygon akzeptiert und benannt wurde, ermittelt das Programm, welche
 	\label{baum}
 \end{figure}
 
-Die Anforderung der zu geringen Transparenz wurde etwas anders gelöst, als anfangs geplant. Die ursprüngliche Implementierung von Frau Klein sah vor, dass die Transparenz mit der Größe der Fläche zunimmt. Dieser Umstand führte in der neuen Implementierung dazu, dass obwohl der Transparenzwert erhöht wurde, kleine Flächen immer noch viel zu deckend waren. Große Flächen jedoch kaum noch sichtbar waren. Deswegen wurde die Kopplung der Transparenz mit der Fläche aufgehoben und stattdessen eine starke Transparenz der Füllfarbe definiert und die Fläche zudem mit einer deckenden Umrandung versehen. Dies ermöglicht eine gute Sichtbarkeit der Knoten und Werte innerhalb des Polygons, bei gleichzeitiger guter Sichtbarkeit des Polygons selbst, wie auf den Abbildungen \ref{menü} und \ref{baum} zu sehen ist.
+Die Anforderung der zu geringen Transparenz wurde etwas anders gelöst, als anfangs geplant. Die ursprüngliche Implementierung von Frau Klein sah vor, dass die Transparenz mit der Größe der Fläche zunimmt. Dieser Umstand führte in der neuen Implementierung dazu, dass obwohl der Transparenzwert erhöht wurde, kleine Flächen immer noch viel zu deckend, große Flächen jedoch kaum noch sichtbar waren. Deswegen wurde die Kopplung der Transparenz mit der Fläche aufgehoben und stattdessen eine starke Transparenz der Füllfarbe definiert und die Fläche zudem mit einer deckenden Umrandung versehen. Dies ermöglicht eine gute Sichtbarkeit der Knoten und Werte innerhalb des Polygons, bei gleichzeitiger guter Sichtbarkeit des Polygons selbst, wie auf den Abbildungen \ref{menü} und \ref{baum} zu sehen ist.
 
 
 
@@ -66,14 +66,14 @@ Die Anforderung der zu geringen Transparenz wurde etwas anders gelöst, als anfa
 
 Die Implementierung der neuen Funktionalitäten lässt sich in mehrere Aspekte unterteilen.
 \begin{enumerate}
-\item die gültigen Linien
+\item Ausprogrammieren der gültigen Linien
 \item Ermittlung der nächsten gültigen Linie zur Mausposition
 \item Zeichnen des aktuellen Polygons
 \item Speicherung und Anzeige akzeptierter Polygone
 \item Ermittlung der Punkte innerhalb eines Polygons und Darstellung in einem Baum
 \end{enumerate}
 
-Da diese Aufgabe im Team mit Herr Vogt gelöst werden sollte, wurden die Aspekte aufgeteilt. Herr Vogt bearbeitete Aspekt Nr. 1, ich die Aspekte 2 - 5. Im folgenden sollen nun die wichtigsten Details meiner Implementierung erläutert werden.
+Da diese Aufgabe im Team mit Herr Vogt gelöst werden sollte, wurden die Aspekte aufgeteilt. Herr Vogt bearbeitete Aspekt Nr. 1, ich die Aspekte 2 - 5. Im folgenden sollen nun die wichtigsten Details meiner Implementierungen erläutert werden.
 
 \begin{description}
 \item[Ermittlung der nächsten gültigen Linie zur Mausposition:] Um die nächste Linie zu ermitteln wurde ein Interface definiert, das alle Klassen, die eine Linie repräsentieren implementieren müssen. Anhand dieses Interfaces kann gesammelt über alle Linien des Diagramms iteriert werden und Funktionswerte verglichen werden. Listing \ref{function} zeigt die Definition des Interfaces.
@@ -100,7 +100,7 @@ Point bestPoint = new Point();
 
 Listing \ref{setPoint} zeigt die Ermittlung der nächsten Linie. Der Abstand des Punktes auf der Linie zur aktuellen Mausposition wird durch die Addition der absoluten Abstände der X- und Y-Werte berechnet. Ist dieser Abstand kleiner als der bisherige kleinste Abstand, so wird dieser übernommen und der Punkt gespeichert. 
 
-Damit diese Methode bei jeder Mausbewegung aufgerufen wird, ist es noch notwendig einen eigenen MouseMotionListener zu implementieren. Dieser reagiert auf Ereignisse, die durch die Maus ausgelöst werden. Wie zum Beispiel, wenn die Maus bewegt wird. Dieser MouseMotionListener ist in Listing \ref{mmlistener} abgebildet. Dort wird bei jeder Mausbewegung die Methode \emph{setPoint} aufgerufen, die die Berechnung aus Listing \ref{setPoint} beinhaltet. Im Anschluss wird das gesamte Bild neu gezeichnet.
+Damit diese Methode bei jeder Mausbewegung aufgerufen wird, ist es noch notwendig einen eigenen MouseMotionListener zu implementieren. Dieser reagiert auf Ereignisse, die durch die Maus ausgelöst werden, wie zum Beispiel, wenn die Maus bewegt wird. Dieser MouseMotionListener ist in Listing \ref{mmlistener} abgebildet. Dort wird bei jeder Mausbewegung die Methode \emph{setPoint} aufgerufen, die die Berechnung aus Listing \ref{setPoint} beinhaltet. Im Anschluss wird das gesamte Bild neu gezeichnet.
 \begin{lstlisting}[captionpos=b, caption=MouseMotionListener, label=mmlistener]
 class drawAreaMouseMotionListener extends MouseMotionAdapter{
         @Override
@@ -128,9 +128,9 @@ g2d.setComposite(c);
 g.fillPolygon(polygon);
 \end{lstlisting}
 
-In Listing \ref{drawPol} wird die Zeichenroutine aufgeführt. Es ist zu sehen, dass zuerst mit der Methode \emph{drawPolygon} nur die Umrisse des Polygons gezeichnet werden. Erst im Anschluss wird der Alphakanal verändert, um die Transparenz der Farbe zu beinflussen, damit die Füllung des Polygons die darunterliegenden Knoten nicht überdeckt.
+In Listing \ref{drawPol} wird die Zeichenroutine aufgeführt. Es ist zu sehen, dass zuerst mit der Methode \emph{drawPolygon} nur die Umrisse des Polygons gezeichnet werden. Anschließend wird der Alphakanal verändert, um die Transparenz der Farbe zu beinflussen, damit die Füllung des Polygons die darunterliegenden Knoten nicht überdeckt.
 
-\item[Speicherung und Anzeige akzeptierter Polygone:] Die Definition eines neuen Polygons wird mit einem Doppelklick abgeschlossen. Dieser Doppelklick wird ebenfalls mit dem vorherigen MouseListener registriert. Daraufhin wird dem Benutzer ein Dialog präsentiert, in dem er wählen kann, ob das Polygon gespeichert, oder verworfen werden soll. Soll das Polygon behalten werden, so muss der Benutzer einen Namen vergeben. Listing \ref{speichern} zeigt, wie die Speicherroutine implementiert wurde.
+\item[Speicherung und Anzeige akzeptierter Polygone:] Die Definition eines neuen Polygons wird mit einem Doppelklick abgeschlossen. Dieser Doppelklick wird ebenfalls mit dem vorherigen MouseListener registriert. Daraufhin wird dem Benutzer ein Dialog präsentiert, in dem er wählen kann, ob das Polygon gespeichert, oder verworfen werden soll. Soll das Polygon behalten werden, ist vom Benutzer ein Name zu vergeben. Listing \ref{speichern} zeigt, wie die Speicherroutine implementiert wurde.
 \begin{lstlisting}[captionpos=b, caption=Routine zum Speichern eines Polygons, label=speichern]
 String description = JOptionPane.showInputDialog(parent, "Give in a description..", "Area Description", 3);
 if(description == null){
@@ -185,10 +185,36 @@ public void searchInnerPoints(NamedPolygon pol){
 }
 \end{lstlisting}
 
-In der Methode \emph{searchInnerPoints} geschieht allerdings noch mehr, als nur das ermitteln der Punkte, die innerhalb eines Polygons liegen. Es wird außerdem gleich ein kleiner Teilbaum generiert, in dem das Polygon  selbst die Wurzel und die Knoten Blätter darstellen.
+In der Methode \emph{searchInnerPoints} geschieht allerdings noch mehr, als nur das ermitteln der Punkte, die innerhalb eines Polygons liegen. Es wird außerdem gleich ein kleiner Teilbaum generiert, in dem das Polygon  selbst die Wurzel und die Knoten Blätter darstellen. Dieser Baum wird an eine externe Klasse übergeben, die in Anlehnung an die Model-View-Controller Architektur als Model fungiert und die Daten der Anzeige beinhaltet. Dieses Model wird nun in einer anderen Anzeige ebenfalls übernommen und der Baum angezeigt. Für diese Anzeige wurde ein weiterer Eintrag im rechten Panel implementiert. Die Klasse \emph{PolyTree} implementiert wie in Listing \ref{polytree} dargestellt das Interface \emph{RightPanelMenuEntry} und kann so in das in der ersten Studienarbeit implementierte Anzeige-Framework eingebettet werden.
+\begin{lstlisting}[captionpos=b, caption=Klasse PolyTree, label=polytree]
+public class PolyTree implements RightPanelMenuEntry{
 
-\end{description}
+    private DataModel model;
+    private JPanel pane;
+    JScrollPane scPane;
+    JTree tree;
 
-\begin{lstlisting}[captionpos=b, caption=Mehr Text, label=code]
+    public PolyTree(DataModel model) {
+        this.model = model;        
+    }
 
+    public String getName() {
+        return "Areas";
+    }
+
+    public JPanel getPanel() {
+        pane = new JPanel();
+        scPane = new JScrollPane();
+        pane.setLayout(new BoxLayout(pane, BoxLayout.PAGE_AXIS));
+        tree = model.getPolygonTree();
+        tree.setRootVisible(false);
+        tree.expandPath(new TreePath(model.getRoot()));
+        scPane.setViewportView(tree);
+        pane.add(scPane);
+        return pane;
+    }
+}
 \end{lstlisting}
+
+Die Klasse \emph{PolyTree} bekommt im Konstruktor die Model-Klasse übergeben und kann aus dieser den Baum zur Anzeige übernehmen. In der vom Interface vorgegebenen Methode \emph{getPanel} wird dem Framework ein Panel übergeben, dass diesen Baum beinhaltet.
+\end{description}
