@@ -1,6 +1,6 @@
 \section{Weiterentwicklung}
 
-In der zweiten Phase des Projekts soll die Funktionalität des KSM erweitert werden. Besonderes Augenmerk liegt hierbei auf der Verbesserung der Anzeige, welche Knoten im aktiven/passiven, oder kritischen Bereich liegen. Diese Anzeige wird intern auch Sum-Chart genannt. Hier wurde bereits in einer der letzten Studienarbeiten von Frau Klein angefangen es dem Benutzer zu ermöglichen Bereiche zu definieren und zu markieren \cite{bib:klein}. Bereiche waren in diesem Fall Ellipsen, die vom Benutzer aufgezogen wurden. Je größer diese wurden, desto transparenter wurde die Füllfarbe. Die Abbildung \ref{ellipse} zeigt den letzten Stand dieser Implementierung.
+In der zweiten Phase des Projekts soll die Funktionalität des KSM erweitert werden. Besonderes Augenmerk liegt hierbei auf der Verbesserung der Anzeige, welche Knoten im aktiven/passiven, oder kritischen Bereich liegen. Diese Anzeige wird im KSM Projekt auch Sum-Chart genannt. Hier wurde bereits in einer der letzten Studienarbeiten von Frau Klein angefangen es dem Benutzer zu ermöglichen Bereiche zu definieren und zu markieren \cite{bib:klein}. Bereiche waren in diesem Fall Ellipsen, die vom Benutzer aufgezogen wurden. Je größer diese wurden, desto transparenter wurde die Füllfarbe. Die Abbildung \ref{ellipse} zeigt den letzten Stand dieser Implementierung.
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.6\textwidth]{pictures/ellipse.png}
@@ -15,7 +15,7 @@ Nach Evaluation dieser Implementierung kam Herr Professor Schubert zu dem Schlus
 Die neuen Anforderungen an eine Bereichsmarkierung lauteten nach diesen Erkenntnissen wie folgt:
 \begin{itemize}
   \item Der Benutzer muss in der Lage sein, einen Bereich mittels Eckpunkten definieren zu können
-  \item Es müssen beliebig viele Eckpunkte sein eingegeben werden können
+  \item Es muss möglich sein, eine beliebige Anzahl an Eckpunkten eingeben zu können
   \item Die Eckpunkte dürfen nur auf bereits vorhandenen Linien gesetzt werden:
   \begin{itemize}
     \item X-Achse
@@ -33,7 +33,7 @@ Dazu wurde noch von den Projektmitgliedern entschieden, dass erstellte Bereiche 
 
 Die gestellten Anforderungen wurden vollständig umgesetzt. Der Benutzer kann nun durch Setzen mehrerer Eckpunkte, die sich auf den vorgegebenen Linien befinden ein Polygon definieren.
 
-Damit der Benutzer immer weiß, wo der nächste Eckpunkt gesetzt werden würde, wurde ein roter Punkt implementiert, der sich nur auf den erlaubten Linien bewegt und so den nächsten Eckpunkt markiert (Abbildung \ref{roterPunkt}).
+Damit der Benutzer immer weiß, wo der nächste Eckpunkt gesetzt werden würde, ist ein roter Punkt implementiert worden, der sich immer auf dem entsprechenden Punkt der zur Mauspostion nächsten gültigen Linie befindet und so den nächsten Eckpunkt markiert (Abbildung \ref{roterPunkt}).
 \begin{figure}
 	\centering
 	\includegraphics[width=1\textwidth]{pictures/roter-punkt.png}
@@ -41,7 +41,7 @@ Damit der Benutzer immer weiß, wo der nächste Eckpunkt gesetzt werden würde, 
 	\label{roterPunkt}
 \end{figure}
 
-Mittels Klick wird der Punkt gespeichert und ein vorläufiges Polygon gezeichnet. Will der Benutzer die Eingabe beenden, kann er das Polygon mit einem Doppelklick abschließen. Anschließend wird einen Auswahldialog präsentiert, der dem Benutzer die Auswahl ermöglicht, das Polygon zu übernehmen, oder zu verwerfen.
+Mittels Klick wird der Punkt gespeichert und ein vorläufiges Polygon gezeichnet. Will der Benutzer die Eingabe beenden, kann er das Polygon mit einem Doppelklick abschließen. Anschließend wird ein Auswahldialog präsentiert, der dem Benutzer die Möglichkeit eröffnet, das Polygon zu übernehmen, oder zu verwerfen.
 Abbildung \ref{menü} zeigt ein abgeschlossenes Polygon und das Auswahlmenü.
 \begin{figure}
 	\centering
@@ -50,7 +50,7 @@ Abbildung \ref{menü} zeigt ein abgeschlossenes Polygon und das Auswahlmenü.
 	\label{menü}
 \end{figure}
 
-Nachdem ein Polygon akzeptiert und benannt wurde, ermittelt das Programm, welche Knoten sich innerhalb dieses Polygons befinden und listet diese in einer Baumstruktur auf. Diese Auflistungen können im rechten Panel unter dem Eintrag ``Areas'' gefunden werden. Abbildung \ref{baum} zeigt diese Auflistung für das Polygon ``Beispiel''.
+Nachdem ein Polygon akzeptiert und benannt wurde, ermittelt das Programm, welche Knoten sich innerhalb dieses Polygons befinden und listet diese in einer Baumstruktur auf. Diese Auflistungen können im rechten Panel unter dem Eintrag ,,Areas'' gefunden werden. Abbildung \ref{baum} zeigt diese Auflistung für das Polygon ,,Beispiel''.
 \begin{figure}
 	\centering
 	\includegraphics[width=1\textwidth]{pictures/baum.png}
@@ -76,7 +76,7 @@ Die Implementierung der neuen Funktionalitäten lässt sich in mehrere Aspekte u
 Da diese Aufgabe im Team mit Herr Vogt gelöst werden sollte, wurden die Aspekte aufgeteilt. Herr Vogt bearbeitete Aspekt Nr. 1, ich die Aspekte 2 - 5. Im folgenden sollen nun die wichtigsten Details meiner Implementierungen erläutert werden.
 
 \begin{description}
-\item[Ermittlung der nächsten gültigen Linie zur Mausposition:] Um die nächste Linie zu ermitteln wurde ein Interface definiert, das alle Klassen, die eine Linie repräsentieren implementieren müssen. Anhand dieses Interfaces kann gesammelt über alle Linien des Diagramms iteriert werden und Funktionswerte verglichen werden. Listing \ref{function} zeigt die Definition des Interfaces.
+\item[Ermittlung der nächsten gültigen Linie zur Mausposition:] Um die nächste Linie zu ermitteln wurde ein Interface definiert, das alle Klassen, die eine Linie repräsentieren implementieren müssen. Anhand dieses Interfaces kann gesammelt über alle Linien des Diagramms iteriert und Funktionswerte verglichen werden. Listing \ref{function} zeigt die Definition des Interfaces.
 \begin{lstlisting}[captionpos=b, caption=Interface für die Linien, label=function]
 public interface Function {
     public Point calcY(int x, int y);
@@ -100,7 +100,7 @@ Point bestPoint = new Point();
 
 Listing \ref{setPoint} zeigt die Ermittlung der nächsten Linie. Der Abstand des Punktes auf der Linie zur aktuellen Mausposition wird durch die Addition der absoluten Abstände der X- und Y-Werte berechnet. Ist dieser Abstand kleiner als der bisherige kleinste Abstand, so wird dieser übernommen und der Punkt gespeichert. 
 
-Damit diese Methode bei jeder Mausbewegung aufgerufen wird, ist es noch notwendig einen eigenen MouseMotionListener zu implementieren. Dieser reagiert auf Ereignisse, die durch die Maus ausgelöst werden, wie zum Beispiel, wenn die Maus bewegt wird. Dieser MouseMotionListener ist in Listing \ref{mmlistener} abgebildet. Dort wird bei jeder Mausbewegung die Methode \emph{setPoint} aufgerufen, die die Berechnung aus Listing \ref{setPoint} beinhaltet. Im Anschluss wird das gesamte Bild neu gezeichnet.
+Damit diese Methode bei jeder Mausbewegung aufgerufen wird, ist es noch notwendig einen eigenen MouseMotionListener zu implementieren. Dieser reagiert auf Ereignisse, die durch die Maus zum Beispiel beim Bewegen ausgelöst werden. Dieser MouseMotionListener ist in Listing \ref{mmlistener} abgebildet. Dort wird bei jeder Mausbewegung die Methode \emph{setPoint} aufgerufen, die die Berechnung aus Listing \ref{setPoint} beinhaltet. Im Anschluss wird das gesamte Bild neu gezeichnet.
 \begin{lstlisting}[captionpos=b, caption=MouseMotionListener, label=mmlistener]
 class drawAreaMouseMotionListener extends MouseMotionAdapter{
         @Override
@@ -167,7 +167,7 @@ public class NamedPolygon extends Polygon{
 }
 \end{lstlisting}
 
-\item[Ermittlung der Punkte innerhalb eines Polygons und Darstellung in einem Baum:] Zeile 9 des Listings \ref{speichern} zeigt schon den Aufruf der Methode \emph{searchInnerPoints}. Listing \ref{siPoints} zeigt diese Methode.
+\item[Ermittlung der Punkte innerhalb eines Polygons und Darstellung in einem Baum:] In Zeile 9 des Listings \ref{speichern} wird die Methode \emph{searchInnerPoints} bereits aufgerufen. Listing \ref{siPoints} zeigt diese Methode.
 \begin{lstlisting}[captionpos=b, caption=Methode searchInnerPoints, label=siPoints]
 public void searchInnerPoints(NamedPolygon pol){
         DefaultMutableTreeNode root = new DefaultMutableTreeNode(pol.getName());
