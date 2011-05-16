@@ -27,7 +27,7 @@ Die neuen Anforderungen an eine Bereichsmarkierung lauteten nach diesen Erkenntn
   \item Die Füllfarbe des Bereichs soll transparenter sein, als bisher
 \end{itemize}
 
-Dazu wurde noch von den Projektmitgliedern entschieden, dass erstellte Bereiche benannt werden sollen. Dieser Name soll innerhalb des Bereichs sichtbar sein.
+Außerdem wurde noch von den Projektmitgliedern entschieden, dass erstellte Bereiche benannt werden sollen. Dieser Name soll innerhalb des Bereichs sichtbar sein.
 
 \subsection{Ergebnis}
 
@@ -73,7 +73,7 @@ Die Implementierung der neuen Funktionalitäten lässt sich in mehrere Aspekte u
 \item Ermittlung der Punkte innerhalb eines Polygons und Darstellung in einem Baum
 \end{enumerate}
 
-Da diese Aufgabe im Team mit Herr Vogt gelöst werden sollte, wurden die Aspekte aufgeteilt. Herr Vogt bearbeitete Aspekt Nr. 1, ich die Aspekte 2 - 5. Im folgenden sollen nun die wichtigsten Details meiner Implementierungen erläutert werden.
+Da diese Aufgabe im Team mit Herr Vogt gelöst werden sollte, wurden die Aspekte aufgeteilt. Herr Vogt bearbeitete Aspekt Nr. 1, ich die Aspekte 2 - 5. Im Folgenden sollen nun die wichtigsten Details meiner Implementierungen erläutert werden.
 
 \begin{description}
 \item[Ermittlung der nächsten gültigen Linie zur Mausposition:] Um die nächste Linie zu ermitteln wurde ein Interface definiert, das alle Klassen, die eine Linie repräsentieren implementieren müssen. Anhand dieses Interfaces kann gesammelt über alle Linien des Diagramms iteriert und Funktionswerte verglichen werden. Listing \ref{function} zeigt die Definition des Interfaces.
@@ -100,7 +100,7 @@ Point bestPoint = new Point();
 
 Listing \ref{setPoint} zeigt die Ermittlung der nächsten Linie. Der Abstand des Punktes auf der Linie zur aktuellen Mausposition wird durch die Addition der absoluten Abstände der X- und Y-Werte berechnet. Ist dieser Abstand kleiner als der bisherige kleinste Abstand, so wird dieser übernommen und der Punkt gespeichert. 
 
-Damit diese Methode bei jeder Mausbewegung aufgerufen wird, ist es noch notwendig einen eigenen MouseMotionListener zu implementieren. Dieser reagiert auf Ereignisse, die durch die Maus zum Beispiel beim Bewegen ausgelöst werden. Dieser MouseMotionListener ist in Listing \ref{mmlistener} abgebildet. Dort wird bei jeder Mausbewegung die Methode \emph{setPoint} aufgerufen, die die Berechnung aus Listing \ref{setPoint} beinhaltet. Im Anschluss wird das gesamte Bild neu gezeichnet.
+Damit diese Methode bei jeder Mausbewegung aufgerufen wird, ist es noch notwendig einen eigenen MouseMotionListener zu implementieren. Dieser reagiert auf Ereignisse die durch die Maus zum Beispiel beim Bewegen ausgelöst werden. Dieser MouseMotionListener ist in Listing \ref{mmlistener} abgebildet. Dort wird bei jeder Mausbewegung die Methode \emph{setPoint} aufgerufen, die die Berechnung aus Listing \ref{setPoint} beinhaltet. Im Anschluss wird das gesamte Bild neu gezeichnet.
 \begin{lstlisting}[captionpos=b, caption=MouseMotionListener, label=mmlistener]
 class drawAreaMouseMotionListener extends MouseMotionAdapter{
         @Override
@@ -166,7 +166,7 @@ public class NamedPolygon extends Polygon{
 
 }
 \end{lstlisting}
-
+\newpage
 \item[Ermittlung der Punkte innerhalb eines Polygons und Darstellung in einem Baum:] In Zeile 9 des Listings \ref{speichern} wird die Methode \emph{searchInnerPoints} bereits aufgerufen. Listing \ref{siPoints} zeigt diese Methode.
 \begin{lstlisting}[captionpos=b, caption=Methode searchInnerPoints, label=siPoints]
 public void searchInnerPoints(NamedPolygon pol){
